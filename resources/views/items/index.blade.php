@@ -16,11 +16,11 @@
                 <tr>
                     <th class="text-center border border-zinc-200 p-4">No</th>
                     <th class="text-center border border-zinc-200 p-4">Title</th>
-                    <th class="text-center border border-zinc-200 p-4">Price</th>
                     <th class="text-center border border-zinc-200 p-4">Description</th>
-                    <th class="text-center border border-zinc-200 p-4">Category</th>
-                    <th class="text-center border border-zinc-200 p-4">Image</th>
-                    <th class="text-center border border-zinc-200 p-4">Rating</th>
+                    <th class="text-center border border-zinc-200 p-4">Deadline</th>
+                    <th class="text-center border border-zinc-200 p-4">Priority</th>
+                    <th class="text-center border border-zinc-200 p-4">Status</th>
+                    <th class="text-center border border-zinc-200 p-4">Tags</th>
                     <th class="text-center border border-zinc-200 p-4">Actions</th>
                 </tr>
             </thead>
@@ -29,36 +29,43 @@
                     <tr>
                         <td class="text-center border border-zinc-200 p-4">{{ $loop->iteration }}</td>
                         <td class="border border-zinc-200 p-4">{{ $item['title'] }}</td>
-                        <td class="border border-zinc-200 p-4">{{ $item['price'] }}</td>
                         <td class="border border-zinc-200 p-4">{{ $item['description'] }}</td>
-                        <td class="border border-zinc-200 p-4">{{ $item['category'] }}</td>
-                        <td class="border border-zinc-200 p-4"><img class="w-20" src="{{ $item['image'] }}"
-                                alt="{{ $item['title'] }}">
+                        <td class="border border-zinc-200 p-4">{{ \Carbon\Carbon::parse($item['dueDate'])->toDateString() }}
                         </td>
-                        <td class="border border-zinc-200 p-4">{{ $item['rating']['rate'] }}</td>
+                        <td class="border border-zinc-200 p-4">{{ $item['priority'] }}</td>
+                        <td class="border border-zinc-200 p-4">{{ $item['status'] }}</td>
+                        <td class="border border-zinc-200 p-4">
+                            @foreach($item['tags'] as $tag)
+                                <span class="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-sm">{{ $tag }}</span>
+                            @endforeach
+                        </td>
                         <td>
                             <div class="flex justify-center items-center">
-                                <a class="btn btn-warning mx-2" href="{{ route('items.editItems', $item['id']) }}">Edit</a>
-                                <form action="{{ route('items.destroy', $item['id']) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-error mx-2"
-                                        onclick="event.preventDefault(); document.getElementById('delete_modal_{{ $item['id'] }}').showModal();">Delete</button>
+                                <a class="btn btn-warning mx-2"
+                                    href="{{ route('items.editItems', ['item' => base64_encode(json_encode($item))]) }}">Edit</a>
 
-                                    <dialog id="delete_modal_{{ $item['id'] }}" class="modal">
-                                        <div class="modal-box">
-                                            <h3 class="text-lg font-bold">{{ $item['title'] }}</h3>
-                                            <p class="py-4">Are you sure you want to delete this item?</p>
-                                            <div class="modal-action">
-                                                <form method="dialog">
-                                                    <button class="btn btn-primary mx-2">Cancel</button>
-                                                    <button class="btn btn-error mx-2 text-white"
-                                                        type="submit">Delete</button>
-                                                </form>
-                                            </div>
+                                <button class="btn btn-error mx-2"
+                                    onclick="document.getElementById('delete_modal_{{ $item['_id'] }}').showModal();">
+                                    Delete
+                                </button>
+
+                                <dialog id="delete_modal_{{ $item['_id'] }}" class="modal">
+                                    <div class="modal-box">
+                                        <h3 class="text-lg font-bold">{{ $item['title'] }}</h3>
+                                        <p class="py-4">Are you sure you want to delete this item?</p>
+                                        <div class="modal-action">
+                                            <form action="{{ route('items.destroy', $item['_id']) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-primary mx-2"
+                                                    onclick="document.getElementById('delete_modal_{{ $item['_id'] }}').close()">
+                                                    Cancel
+                                                </button>
+                                                <button class="btn btn-error mx-2 text-white" type="submit">Delete</button>
+                                            </form>
                                         </div>
-                                    </dialog>
-                                </form>
+                                    </div>
+                                </dialog>
                             </div>
                         </td>
                     </tr>
