@@ -14,30 +14,12 @@
             @csrf
             @method('PUT')
             <div class="mb-3">
-                <label class="form-label">Title</label>
-                <input type="text" name="title" class="form-control" value="{{ $item['title'] }}" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Price</label>
-                <textarea name="price" class="form-control" required>{{ $item['price'] }}</textarea>
+                <label class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" value="{{ $item['name'] }}" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Description</label>
                 <textarea name="description" class="form-control" required>{{ $item['description'] }}</textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Category</label>
-                <input type="text" name="category" class="form-control" value="{{ $item['category'] }}" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label
-                ">Image</label>
-                <input type="text" name="image" class="form-control" value="{{ $item['image'] }}" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label
-                ">Rating</label>
-                <input type="text" name="rating" class="form-control" value="{{ $item['rating']['rate'] }}" required>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
             <a href="{{ route('items.index') }}" class="btn btn-secondary">Cancel</a>

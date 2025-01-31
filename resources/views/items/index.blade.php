@@ -15,12 +15,8 @@
             <thead class="bg-gray-100">
                 <tr>
                     <th class="text-center border border-zinc-200 p-4">No</th>
-                    <th class="text-center border border-zinc-200 p-4">Title</th>
-                    <th class="text-center border border-zinc-200 p-4">Price</th>
+                    <th class="text-center border border-zinc-200 p-4">Name</th>
                     <th class="text-center border border-zinc-200 p-4">Description</th>
-                    <th class="text-center border border-zinc-200 p-4">Category</th>
-                    <th class="text-center border border-zinc-200 p-4">Image</th>
-                    <th class="text-center border border-zinc-200 p-4">Rating</th>
                     <th class="text-center border border-zinc-200 p-4">Actions</th>
                 </tr>
             </thead>
@@ -28,14 +24,8 @@
                 @foreach($items as $item)
                     <tr>
                         <td class="text-center border border-zinc-200 p-4">{{ $loop->iteration }}</td>
-                        <td class="border border-zinc-200 p-4">{{ $item['title'] }}</td>
-                        <td class="border border-zinc-200 p-4">{{ $item['price'] }}</td>
+                        <td class="border border-zinc-200 p-4">{{ $item['name'] }}</td>
                         <td class="border border-zinc-200 p-4">{{ $item['description'] }}</td>
-                        <td class="border border-zinc-200 p-4">{{ $item['category'] }}</td>
-                        <td class="border border-zinc-200 p-4"><img class="w-20" src="{{ $item['image'] }}"
-                                alt="{{ $item['title'] }}">
-                        </td>
-                        <td class="border border-zinc-200 p-4">{{ $item['rating']['rate'] }}</td>
                         <td>
                             <div class="flex justify-center items-center">
                                 <a class="btn btn-warning mx-2" href="{{ route('items.editItems', $item['id']) }}">Edit</a>
@@ -47,7 +37,7 @@
 
                                     <dialog id="delete_modal_{{ $item['id'] }}" class="modal">
                                         <div class="modal-box">
-                                            <h3 class="text-lg font-bold">{{ $item['title'] }}</h3>
+                                            <h3 class="text-lg font-bold">{{ $item['name'] }}</h3>
                                             <p class="py-4">Are you sure you want to delete this item?</p>
                                             <div class="modal-action">
                                                 <form method="dialog">
