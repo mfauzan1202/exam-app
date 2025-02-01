@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class ItemController extends Controller
 {
-    // private $apiUrl = 'http://localhost:3001/items';
-    private $apiUrl = 'https://fakestoreapi.com/products';
+    private $apiUrl = 'http://localhost:3001/items';
 
     public function index()
     {
@@ -42,11 +41,8 @@ class ItemController extends Controller
     public function update(Request $request, $id)
     {
         $response = Http::put($this->apiUrl . '/' . $id, [
-            'title' => $request->title,
-            'price' => (float) $request->price,
-            'description' => $request->description,
-            'category' => $request->category,
-            'image' => $request->image
+            'name' => $request->name,
+            'description' => $request->description
         ]);
 
         if ($response->failed()) {
